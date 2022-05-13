@@ -9,7 +9,7 @@ public class PlayerRunState : PlayerBaseState
     }
 
     public override void UpdateState(PlayerMovement playerMovement) {
-        if (playerMovement.shoot.ReadValue<float>() > 0) {
+        if (playerMovement.shoot.ReadValue<Vector2>() != Vector2.zero) {
             playerMovement.SwitchState(playerMovement.ShootState);
         }
 

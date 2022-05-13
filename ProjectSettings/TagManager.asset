@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstacles
   - Walls
+  - Shooter
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - Projectiles
   - Player
   - Enemies
-  - 
-  - 
+  - Shooter
+  - Jumper
   - 
   - 
   - 

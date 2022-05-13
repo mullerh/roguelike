@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerBaseState
 {
+    private float jumpTimer = 0;
+    
     public override void EnterState(PlayerMovement playerMovement) {
         Debug.Log("JUMPING");
         if (playerMovement.cooldownUntilNextJump >= Time.time) {
             playerMovement.SwitchState(playerMovement.RunState);
             return;
         }
-        playerMovement.jumpTimer = Time.time;
+        jumpTimer = Time.time;
 
-        Physics2D.IgnoreCollision(playerMovement.obstacles.GetComponent<Collider2D>(), playerMovement.GetComponent<Collider2D>());
+        playerMovement.gameObject.layer = LayerMask.NameToLayer("Jumper");
     }
 
     public override void UpdateState(PlayerMovement playerMovement) {
@@ -23,9 +25,9 @@ public class PlayerJumpState : PlayerBaseState
     public override void InitializeSubState(PlayerMovement playerMovement) {}
 
     public override void FixedUpdateState(PlayerMovement playerMovement) {
-        if (playerMovement.jumpTimer + playerMovement.jumpTime > Time.time) {
-                playerMovement.rb.MovePosition(playerMovement.rb.position + playerMovement.moveDirection * 
-                                                playerMovement.moveSpeed * Time.fixedDeltaTime * playerMovement.jumpSpeed);
+        if (jumpTimer + playerMovement.jumpTime > Time.time) {
+            playerMovement.rb.MovePosition(playerMovement.rb.position + playerMovement.moveDirection * 
+                                           playerMovement.moveSpeed * Time.fixedDeltaTime * playerMovement.jumpSpeed);
         } else {
             playerMovement.cooldownUntilNextJump = Time.time + playerMovement.jumpCooldown;
             playerMovement.SwitchState(playerMovement.RunState);
@@ -33,7 +35,6 @@ public class PlayerJumpState : PlayerBaseState
     }
 
     public override void ExitState(PlayerMovement playerMovement) {
-        Physics2D.IgnoreCollision(playerMovement.obstacles.GetComponent<Collider2D>(), 
-                                  playerMovement.GetComponent<Collider2D>(), false);
+        playerMovement.gameObject.layer = LayerMask.NameToLayer("Player");
     }
 }

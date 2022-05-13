@@ -6,7 +6,7 @@ public class PlayerShootState : PlayerBaseState
 {
     public override void EnterState(PlayerMovement playerMovement) {
         Debug.Log("SHOOT");
-        playerMovement.spawnProj();
+        playerMovement.shooter.spawnProj();
         playerMovement.SwitchState(playerMovement.RunState);
     }
 

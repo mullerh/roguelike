@@ -4,7 +4,6 @@ public class ProjectileBehaviour : MonoBehaviour
 {
     // objects
     public Rigidbody2D rb;
-    public GameObject player;
 
     // stats
     public float projSpeed;
@@ -14,12 +13,15 @@ public class ProjectileBehaviour : MonoBehaviour
     private PlayerMovement playerMovement;
     private Vector3 initVel = Vector3.zero;
 
-    void Start() {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerMovement = player.GetComponent<PlayerMovement>();
+    // shooter
+    private ShooterBehaviour shooter;
 
-        initVel.x = playerMovement.moveDirection.x;
-        initVel.y = playerMovement.moveDirection.y;
+    void Start() {
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<ShooterBehaviour>();
+
+        initVel.x = shooter.shootDirection.x;
+        initVel.y = shooter.shootDirection.y;
 
         if (initVel.y == 0 && initVel.x == 0) {
             initVel.x = 1;
