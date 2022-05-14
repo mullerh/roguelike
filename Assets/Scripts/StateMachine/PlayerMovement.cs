@@ -41,18 +41,19 @@ public class PlayerMovement : MonoBehaviour
 
     // player stats
     public float health;
-    // TODO: Dash damage
 
     // Debugger variables
     [HideInInspector] public SpriteRenderer spriteRenderer;
 
     void Awake() {
+        // initialize vars
         playerControls = new PlayerControls();
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void OnEnable() {
+        // enable controls
         move = playerControls.Player.Move;
         move.Enable();
         jump = playerControls.Player.Jump;
@@ -70,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // start at idle state
         currentState = IdleState;
         currentState.EnterState(this);
     }
@@ -77,9 +79,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // handoff update to current state
         currentState.UpdateState(this);
     }
 
+    // handle state switching
     public void SwitchState(PlayerBaseState state) {
         currentState.ExitState(this);
         currentState = state;
@@ -89,11 +93,13 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate() 
     {
+        // handoff fixedupdate to current state
         currentState.FixedUpdateState(this);
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision) {
+        // keep track of enemies hitting the player
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
             health -= collision.gameObject.GetComponent<EnemyBehaviour>().damage;
             if (health <= 0) {

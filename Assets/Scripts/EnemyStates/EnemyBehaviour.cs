@@ -36,18 +36,23 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector] public SpriteRenderer enemySprite;
     
     void Awake() {
+        // for debugging
         enemySprite = GetComponent<SpriteRenderer>();
+
         vectorToPlayer = Vector2.zero;
         distanceToPlayer = Mathf.Infinity;
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         wallPlayerLayer = LayerMask.GetMask("Player", "Walls", "Jumper");
+
+        // so it can remove itself from shooter's enemy list if killed
         shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<ShooterBehaviour>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        // start in idle state
         currentState = IdleState;
         currentState.EnterState(this);
     }
@@ -55,37 +60,43 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //BUG: if there is a dashed enemy between player and enemy, then it will briefly stop following
         RaycastHit2D hit = Physics2D.Linecast(transform.position, playerTransform.position, wallPlayerLayer);
 
+        // if something was hit by line (only really a problem when player is dashed over the enemy)
         if (hit) {
+            // and if thing was player, update variables to point towards player
             if (hit.transform.tag == "Player") {
                 vectorToPlayer = playerTransform.position - transform.position;
                 distanceToPlayer = vectorToPlayer.magnitude;
                 vectorToPlayer.Normalize();
             }
         } else {
+            // if nothing was hit by line, default to being stationary (dont have to move if player is overtop)
             vectorToPlayer = Vector2.zero;
         }
 
+        // hand off updating to current state
         currentState.UpdateState(this);
     }
 
-    private void FixedUpdate() { 
+    private void FixedUpdate() {
+        // hand off to current state
         currentState.FixedUpdateState(this);
     }
 
+    // handle switching states
     public void SwitchState(EnemyBaseState state) {
         currentState.ExitState(this);
         currentState = state;
         currentState.EnterState(this);
     }
 
+    // enemies handle collisions with projectiles for performance (worst case for number of projectiles is way higher)
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Projectiles")) {
             health -= collision.gameObject.GetComponent<ProjectileBehaviour>().damage;
             if (health <= 0) {
-                // int index = Array.IndexOf(array, gameObject);
-                // shooter.enemies = shooter.enemies.Where((e, i) => i != index).ToArray();
                 shooter.enemies.Remove(gameObject);
                 Destroy(gameObject);
             }

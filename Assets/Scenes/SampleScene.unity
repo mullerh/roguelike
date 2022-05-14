@@ -1793,6 +1793,7 @@ MonoBehaviour:
   cooldownUntilNextJump: -3
   shooter: {fileID: 1021470373}
   health: 100
+  spriteRenderer: {fileID: 0}
 --- !u!114 &391700214
 MonoBehaviour:
   m_ObjectHideFlags: 0

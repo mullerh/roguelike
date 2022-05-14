@@ -8,14 +8,17 @@ public class DashDetection : MonoBehaviour
     public ShooterBehaviour shooter;
 
     void OnTriggerEnter2D(Collider2D collider) {
-        Debug.Log("AAAAAAAAAAAAAAAAAA");
-        if (player.gameObject.layer == LayerMask.NameToLayer("Jumper")) {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
-                collider.gameObject.GetComponent<EnemyBehaviour>().health -= player.jumpingDamage;
-                if (collider.gameObject.GetComponent<EnemyBehaviour>().health <= 0) {
-                    shooter.enemies.Remove(collider.gameObject);
-                    Destroy(collider.gameObject);
-                }
+        Debug.Log("Dashed over something");
+        
+        // if dashed over enemy
+        if (collider.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
+            // damage enemy
+            collider.gameObject.GetComponent<EnemyBehaviour>().health -= player.jumpingDamage;
+            // if enemy is below 0 health
+            if (collider.gameObject.GetComponent<EnemyBehaviour>().health <= 0) {
+                // kill enemy (important to remove from enemies)
+                shooter.enemies.Remove(collider.gameObject);
+                Destroy(collider.gameObject);
             }
         }
     }

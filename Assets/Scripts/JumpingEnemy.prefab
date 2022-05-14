@@ -158,6 +158,7 @@ MonoBehaviour:
   distanceToPlayer: 0
   jumpLength: 0.5
   jumpSpeed: 4
+  enemySprite: {fileID: 0}
 --- !u!114 &3489799385923703358
 MonoBehaviour:
   m_ObjectHideFlags: 0
