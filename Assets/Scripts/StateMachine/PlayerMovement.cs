@@ -43,9 +43,13 @@ public class PlayerMovement : MonoBehaviour
     public float health;
     // TODO: Dash damage
 
+    // Debugger variables
+    [HideInInspector] public SpriteRenderer spriteRenderer;
+
     void Awake() {
         playerControls = new PlayerControls();
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void OnEnable() {

@@ -31,8 +31,12 @@ public class EnemyBehaviour : MonoBehaviour
     // jump
     public float jumpLength;
     public float jumpSpeed;
+
+    // Debugger variables
+    [HideInInspector] public SpriteRenderer enemySprite;
     
     void Awake() {
+        enemySprite = GetComponent<SpriteRenderer>();
         vectorToPlayer = Vector2.zero;
         distanceToPlayer = Mathf.Infinity;
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");

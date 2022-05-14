@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4243713115702204475}
   - component: {fileID: 4243713115702204479}
   - component: {fileID: 4243713115702204478}
+  - component: {fileID: 3489799385923703358}
   m_Layer: 12
   m_Name: JumpingEnemy
   m_TagString: Enemy
@@ -157,3 +158,30 @@ MonoBehaviour:
   distanceToPlayer: 0
   jumpLength: 0.5
   jumpSpeed: 4
+--- !u!114 &3489799385923703358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4243713115702204474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: cdba8b325fbf85b959921ef000000000ff7bc737879ed2ad
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -330636

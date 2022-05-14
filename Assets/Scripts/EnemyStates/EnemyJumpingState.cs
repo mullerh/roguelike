@@ -7,6 +7,7 @@ public class EnemyJumpingState : EnemyBaseState
     private float jumpTimer = 0;
 
     public override void EnterState(EnemyBehaviour enemyBehaviour) {
+        enemyBehaviour.enemySprite.color = Color.blue;
         jumpTimer = Time.time;
 
         Physics2D.IgnoreCollision(enemyBehaviour.obstacles.GetComponent<Collider2D>(), enemyBehaviour.GetComponent<Collider2D>());

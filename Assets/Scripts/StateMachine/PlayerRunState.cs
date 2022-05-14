@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerRunState : PlayerBaseState
 {
     public override void EnterState(PlayerMovement playerMovement) {
+        playerMovement.spriteRenderer.color = Color.yellow;
         Debug.Log("RUNNING");
     }
 

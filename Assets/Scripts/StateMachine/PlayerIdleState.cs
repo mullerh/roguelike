@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerIdleState : PlayerBaseState
 {
     public override void EnterState(PlayerMovement playerMovement) {
+        playerMovement.spriteRenderer.color = Color.white;
         Debug.Log("IDLE");
     }
 

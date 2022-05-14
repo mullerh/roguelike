@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerShootState : PlayerBaseState
 {
     public override void EnterState(PlayerMovement playerMovement) {
+        playerMovement.spriteRenderer.color = Color.red;
         Debug.Log("SHOOT");
         playerMovement.shooter.spawnProj();
         playerMovement.SwitchState(playerMovement.RunState);

@@ -8,6 +8,7 @@ public class PlayerJumpState : PlayerBaseState
     
     public override void EnterState(PlayerMovement playerMovement) {
         Debug.Log("JUMPING");
+        playerMovement.spriteRenderer.color = Color.blue;
         if (playerMovement.cooldownUntilNextJump >= Time.time) {
             playerMovement.SwitchState(playerMovement.RunState);
             return;

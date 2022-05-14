@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class EnemyAgroState : EnemyBaseState
 {
-    public override void EnterState(EnemyBehaviour enemyBehaviour) {}
+    public override void EnterState(EnemyBehaviour enemyBehaviour) {
+        enemyBehaviour.enemySprite.color = Color.red;
+    }
 
     public override void UpdateState(EnemyBehaviour enemyBehaviour) {
         if (enemyBehaviour.distanceToPlayer > enemyBehaviour.stopAgroThreshold) {
