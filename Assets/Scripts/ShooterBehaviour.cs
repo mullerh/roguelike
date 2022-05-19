@@ -10,10 +10,10 @@ public class ShooterBehaviour : MonoBehaviour
     public ProjectileBehaviour projectilePrefab;
     public float fireRate;
     public float lockingAngleRange;
-    [HideInInspector] public Vector2 shootDirection;
+    [HideInInspector] public Vector3 shootDirection;
     private InputAction shoot;
     private float lastShotTime = -10;
-    private Vector2 offsetVector;
+    private Vector3 offsetVector;
     private int wallPlayerLayer;
     public List<GameObject> enemies;
 
@@ -27,7 +27,7 @@ public class ShooterBehaviour : MonoBehaviour
         // vector from player to shooter
         offsetVector = transform.position - player.position;
         // layers the prediction line can hit
-        wallPlayerLayer = LayerMask.GetMask("Player", "Walls");
+        wallPlayerLayer = LayerMask.GetMask("Walls");
     }
 
     void OnEnable() {
@@ -44,19 +44,22 @@ public class ShooterBehaviour : MonoBehaviour
     void Update()
     {
         // get direction of shoot input
-        shootDirection = shoot.ReadValue<Vector2>();
+        Vector2 tempDir = shoot.ReadValue<Vector2>();
+        shootDirection = new Vector3(tempDir.x, 0, tempDir.y);
         shootDirection.Normalize();
 
         // get the enemy in aim FOV that is closest to the line extending out from the direction the player is facing
-        GameObject closestEnemyInRange = getClosestEnemiesInRange();
-        // if such an enemy exists, override the direction player is shooting (otherwise will stay the direction of input)
+        GameObject closestEnemyInRange = getClosestEnemiesInRange(tempDir);
+        // // if such an enemy exists, override the direction player is shooting (otherwise will stay the direction of input)
         if (closestEnemyInRange != null) {
             shootDirection = closestEnemyInRange.transform.position - player.position;
             shootDirection.Normalize();
+
+            Debug.Log(Vector3.Scale(Mathf.Sqrt(3) * shootDirection, offsetVector));
         }
 
         // move shooter towards the direction player is shooting (while maintaining offset XY ratio)
-        transform.position = Vector2.Scale(Mathf.Sqrt(2) * shootDirection, offsetVector) + (Vector2)player.position;
+        transform.position = Vector3.Scale(Mathf.Sqrt(3) * shootDirection, offsetVector) + player.position;
     }
 
     public void spawnProj(){
@@ -72,39 +75,42 @@ public class ShooterBehaviour : MonoBehaviour
     }
 
     // REQUIRES: shooter offset X to Y ratio to be 1:1
-    private GameObject getClosestEnemiesInRange() {
+    private GameObject getClosestEnemiesInRange(Vector2 direction) {
         // left and right FOV of the shooter's autoassist
-        Vector2 lv = Rotate(shootDirection, -lockingAngleRange);
-        Vector2 rv = Rotate(shootDirection, lockingAngleRange);
+        Vector2 lv = Rotate(direction, -lockingAngleRange);
+        Vector2 rv = Rotate(direction, lockingAngleRange);
+        
+        Vector2 playerPos2D = new Vector2(player.position.x, player.position.z);
 
         // for debugging
-        Debug.DrawLine(player.position, (Vector2)player.position + lv);
-        Debug.DrawLine(player.position, (Vector2)player.position + rv);
+        Debug.DrawLine(player.position, new Vector3(player.position.x + lv.x, player.position.y, player.position.z + lv.y));
+        Debug.DrawLine(player.position, new Vector3(player.position.x + rv.x, player.position.y, player.position.z + rv.y));
 
         // ray from player going towards the direction of shot
-        Ray ray = new Ray(player.position, shootDirection);
+        Ray ray = new Ray(playerPos2D, direction);
         float closestDistance = Mathf.Infinity;
         GameObject closestObject = null;
 
-        foreach (GameObject obj in enemies) {
-            Transform enemyTransform = obj.transform;
+        foreach (GameObject enemy in enemies) {
+            Transform enemyTransform = enemy.transform;
+            Vector2 enemyPos2D = new Vector2(enemyTransform.position.x, enemyTransform.position.z);
 
             // FROM: https://stackoverflow.com/questions/11456671/determine-if-a-point-is-within-the-range-of-two-other-points-that-create-infinit
-            Vector2 enemyDirection = enemyTransform.position - player.position;
+            Vector2 enemyDirection = enemyPos2D - playerPos2D;
             float Sl = lv.y * enemyDirection.x - lv.x * enemyDirection.y;
             float Sr = -rv.y * enemyDirection.x + rv.x * enemyDirection.y;
 
             // if enemy is within autoaim FOV 
             if (Sl < 0 && Sr < 0) {
                 // if line from enemy to player is unobstructed
-                if (Physics2D.Linecast(enemyTransform.position, player.position, wallPlayerLayer).transform.tag == "Player") {
+                if (!Physics.Linecast(enemyTransform.position, player.position, wallPlayerLayer)) {
                     Debug.DrawLine(enemyTransform.position, player.position);
                     // FROM: https://answers.unity.com/questions/568773/shortest-distance-from-a-point-to-a-vector.html
                     // distance from enemy to ray
-                    float currentDistance = Vector3.Cross(ray.direction, obj.transform.position - ray.origin).magnitude;
+                    float currentDistance = Vector3.Cross(ray.direction, enemyPos2D - (Vector2)ray.origin).magnitude;
                     if (currentDistance < closestDistance) {
                         closestDistance = currentDistance;
-                        closestObject = obj;
+                        closestObject = enemy;
                     }
                 }
             }

@@ -6,7 +6,7 @@ public class PlayerIdleState : PlayerBaseState
 {
     public override void EnterState(PlayerMovement playerMovement) {
         // debugging
-        playerMovement.spriteRenderer.color = Color.white;
+        playerMovement.rend.material.color = Color.white;
         Debug.Log("IDLE");
     }
 

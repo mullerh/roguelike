@@ -19,9 +19,9 @@ public class PlayerMovement : MonoBehaviour
     public PlayerShootState ShootState = new PlayerShootState();
 
     // movement
-    public Rigidbody2D rb;
+    public Rigidbody rb;
     public float moveSpeed = 5f;
-    [HideInInspector] public Vector2 moveDirection = Vector2.zero;
+    [HideInInspector] public Vector3 moveDirection = Vector3.zero;
 
     // inputs
     [HideInInspector] public InputAction move;
@@ -43,13 +43,13 @@ public class PlayerMovement : MonoBehaviour
     public float health;
 
     // Debugger variables
-    [HideInInspector] public SpriteRenderer spriteRenderer;
+    [HideInInspector] public Renderer rend;
 
     void Awake() {
         // initialize vars
         playerControls = new PlayerControls();
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        rend = GetComponent<Renderer>();
     }
 
     void OnEnable() {
@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter(Collision collision) {
         // keep track of enemies hitting the player
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
             health -= collision.gameObject.GetComponent<EnemyBehaviour>().damage;

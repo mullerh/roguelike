@@ -9,7 +9,7 @@ public class PlayerJumpState : PlayerBaseState
     public override void EnterState(PlayerMovement playerMovement) {
         // debugging
         Debug.Log("JUMPING");
-        playerMovement.spriteRenderer.color = Color.blue;
+        playerMovement.rend.material.color = Color.blue;
 
         // if cooldown is not over, go back to running
         if (playerMovement.cooldownUntilNextJump >= Time.time) {

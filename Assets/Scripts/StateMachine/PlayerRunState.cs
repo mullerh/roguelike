@@ -6,7 +6,7 @@ public class PlayerRunState : PlayerBaseState
 {
     public override void EnterState(PlayerMovement playerMovement) {
         // debugging
-        playerMovement.spriteRenderer.color = Color.yellow;
+        playerMovement.rend.material.color = Color.yellow;
         Debug.Log("RUNNING");
     }
 
@@ -30,8 +30,9 @@ public class PlayerRunState : PlayerBaseState
 
     public override void FixedUpdateState(PlayerMovement playerMovement) {
         // Move in direction of move input at movespeed (check for zero is to remember last direction moved, when leaving run state)
-        Vector2 moveVec = playerMovement.move.ReadValue<Vector2>();
-        if (moveVec != Vector2.zero) {
+        Vector2 tempDir = playerMovement.move.ReadValue<Vector2>();
+        Vector3 moveVec = new Vector3(tempDir.x, 0, tempDir.y);
+        if (moveVec != Vector3.zero) {
             playerMovement.moveDirection = moveVec;
             playerMovement.moveDirection.Normalize();
 

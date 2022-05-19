@@ -12,7 +12,7 @@ public class EnemyBehaviour : MonoBehaviour
     public float moveSpeed;
 
     // objects
-    public Rigidbody2D rb;
+    public Rigidbody rb;
     private Transform playerTransform;
     [HideInInspector] public GameObject obstacles;
     private int wallPlayerLayer;
@@ -25,7 +25,7 @@ public class EnemyBehaviour : MonoBehaviour
     private EnemyBaseState currentState;
 
     // player vectors
-    [HideInInspector] public Vector2 vectorToPlayer;
+    [HideInInspector] public Vector3 vectorToPlayer;
     [HideInInspector] public float distanceToPlayer;
 
     // jump
@@ -39,11 +39,11 @@ public class EnemyBehaviour : MonoBehaviour
         // for debugging
         enemySprite = GetComponent<SpriteRenderer>();
 
-        vectorToPlayer = Vector2.zero;
+        vectorToPlayer = Vector3.zero;
         distanceToPlayer = Mathf.Infinity;
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        wallPlayerLayer = LayerMask.GetMask("Player", "Walls", "Jumper");
+        wallPlayerLayer = LayerMask.GetMask("Walls");
 
         // so it can remove itself from shooter's enemy list if killed
         shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<ShooterBehaviour>();
@@ -60,20 +60,14 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //BUG: if there is a dashed enemy between player and enemy, then it will briefly stop following
-        RaycastHit2D hit = Physics2D.Linecast(transform.position, playerTransform.position, wallPlayerLayer);
-
         // if something was hit by line (only really a problem when player is dashed over the enemy)
-        if (hit) {
-            // and if thing was player, update variables to point towards player
-            if (hit.transform.tag == "Player") {
-                vectorToPlayer = playerTransform.position - transform.position;
-                distanceToPlayer = vectorToPlayer.magnitude;
-                vectorToPlayer.Normalize();
-            }
+        if (Physics.Linecast(transform.position, playerTransform.position, wallPlayerLayer)) {
+            // if nothing was hit by line, default to being stationary
+            vectorToPlayer = Vector3.zero;
         } else {
-            // if nothing was hit by line, default to being stationary (dont have to move if player is overtop)
-            vectorToPlayer = Vector2.zero;
+            vectorToPlayer = playerTransform.position - transform.position;
+            distanceToPlayer = vectorToPlayer.magnitude;
+            vectorToPlayer.Normalize();    
         }
 
         // hand off updating to current state
@@ -93,7 +87,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     // enemies handle collisions with projectiles for performance (worst case for number of projectiles is way higher)
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Projectiles")) {
             health -= collision.gameObject.GetComponent<ProjectileBehaviour>().damage;
             if (health <= 0) {

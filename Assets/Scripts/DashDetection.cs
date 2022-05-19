@@ -7,7 +7,7 @@ public class DashDetection : MonoBehaviour
     public PlayerMovement player;
     public ShooterBehaviour shooter;
 
-    void OnTriggerEnter2D(Collider2D collider) {
+    void OnTriggerEnter(Collider collider) {
         Debug.Log("Dashed over something");
         
         // if dashed over enemy

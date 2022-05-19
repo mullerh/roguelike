@@ -6,7 +6,7 @@ public class PlayerShootState : PlayerBaseState
 {
     public override void EnterState(PlayerMovement playerMovement) {
         // debugging
-        playerMovement.spriteRenderer.color = Color.red;
+        playerMovement.rend.material.color = Color.red;
         Debug.Log("SHOOT");
         // spaw projectile and immediately return to run
         playerMovement.shooter.spawnProj();

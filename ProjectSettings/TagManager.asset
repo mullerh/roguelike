@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Enemy
   - Obstacles
   - Walls
   - Shooter
-  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -24,7 +24,7 @@ TagManager:
   - Enemies
   - Shooter
   - Jumper
-  - 
+  - EnemyJumper
   - 
   - 
   - 
@@ -42,21 +42,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: BASE
-    uniqueID: 848018125
-    locked: 0
-  - name: Background
-    uniqueID: 3112550239
-    locked: 0
-  - name: Obstacles
-    uniqueID: 4028535385
-    locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Walls
-    uniqueID: 935820287
-    locked: 0
-  - name: Foreground
-    uniqueID: 2916261511
     locked: 0

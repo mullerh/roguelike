@@ -3,7 +3,7 @@ using UnityEngine;
 public class ProjectileBehaviour : MonoBehaviour
 {
     // objects
-    public Rigidbody2D rb;
+    public Rigidbody rb;
 
     // stats
     public float projSpeed;
@@ -11,7 +11,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
     // movement
     private PlayerMovement playerMovement;
-    private Vector2 initDirection = Vector2.zero;
+    private Vector3 initDirection = Vector3.zero;
 
     // shooter
     private ShooterBehaviour shooter;
@@ -24,9 +24,10 @@ public class ProjectileBehaviour : MonoBehaviour
         // save the initial direction of shooter when projectile is shot
         initDirection.x = shooter.shootDirection.x;
         initDirection.y = shooter.shootDirection.y;
+        initDirection.z = shooter.shootDirection.z;
 
         // if the shooter direction is somehow 0, default to right
-        if (initDirection.y == 0 && initDirection.x == 0) {
+        if (initDirection.z == 0 && initDirection.x == 0) {
             initDirection.x = 1;
         }
     }
@@ -38,7 +39,7 @@ public class ProjectileBehaviour : MonoBehaviour
     }
 
     // destroy when it collides with something
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter(Collision collision) {
         Destroy(gameObject);
     }
 }
