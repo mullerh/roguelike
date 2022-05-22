@@ -33,11 +33,11 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown = 3;
     public float jumpSpeed = 2f;
     public float jumpingDamage;
+    public GameObject dashWallPrefab;
     [HideInInspector] public float cooldownUntilNextJump = -3;
 
     // shoot
     public ShooterBehaviour shooter;
-    
 
     // player stats
     public float health;
@@ -106,5 +106,13 @@ public class PlayerMovement : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void drawDashWall(Vector3 startDashPos, Vector3 endDashPos) {
+        // Instantiate(dashWallPrefab, middleDashPos, Quaternion.LookRotation(endDashPos));
+        GameObject dashWall = Instantiate(dashWallPrefab);
+        dashWall.transform.localScale = new Vector3(0.25f, 1f, Vector3.Distance(startDashPos, endDashPos));
+        dashWall.transform.position = startDashPos + (endDashPos - startDashPos)/2;
+        dashWall.transform.rotation = Quaternion.LookRotation(endDashPos - startDashPos);
     }
 }
