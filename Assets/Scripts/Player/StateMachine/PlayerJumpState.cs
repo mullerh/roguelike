@@ -8,12 +8,13 @@ public class PlayerJumpState : PlayerBaseState
     private RigidbodyConstraints rbConstraintsDefault = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     private Vector3 startDashPos;
     private Vector3 endDashPos;
+
+    private bool flag = false;
     
     public override void EnterState(PlayerMovement playerMovement) {
         // debugging
         Debug.Log("JUMPING");
         playerMovement.rend.material.color = Color.blue;
-        startDashPos = playerMovement.transform.position;
 
         // if cooldown is not over, go back to running
         if (playerMovement.cooldownUntilNextJump >= Time.time) {
@@ -21,7 +22,9 @@ public class PlayerJumpState : PlayerBaseState
             return;
         }
 
-        // set timer and layer
+        // set timer and layer and constraints
+        flag = true;
+        startDashPos = playerMovement.transform.position;
         jumpTimer = Time.time;
         playerMovement.gameObject.layer = LayerMask.NameToLayer("Jumper");
         playerMovement.rb.constraints = rbConstraintsDefault | RigidbodyConstraints.FreezePositionY;
@@ -46,16 +49,16 @@ public class PlayerJumpState : PlayerBaseState
     }
 
     public override void ExitState(PlayerMovement playerMovement) {
-        // reset layer to Player
-        // if cooldown is not over, go back to running
-        if (playerMovement.cooldownUntilNextJump >= Time.time) {
-            playerMovement.SwitchState(playerMovement.RunState);
-            return;
+        // if (playerMovement.cooldownUntilNextJump >= Time.time) {
+        //     playerMovement.SwitchState(playerMovement.RunState);
+        //     return;
+        // }
+        if (flag) {
+            endDashPos = playerMovement.transform.position;
+            playerMovement.drawDashWall(startDashPos, endDashPos);
+            flag = false;
         }
-
-        endDashPos = playerMovement.transform.position;
         playerMovement.gameObject.layer = LayerMask.NameToLayer("Player");
         playerMovement.rb.constraints = rbConstraintsDefault;
-        playerMovement.drawDashWall(startDashPos, endDashPos);
     }
 }

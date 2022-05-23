@@ -118,60 +118,6 @@ public class ShooterBehaviour : MonoBehaviour
         return closestObject;
     }
 
-    // // FROM: https://answers.unity.com/questions/568773/shortest-distance-from-a-point-to-a-vector.html
-    // private GameObject getClosestEnemy(List<GameObject> points) {
-    //     if (points.Count > 0) {
-    //         Ray ray = new Ray(player.position, shootDirection);
-    //         float closestDistance = Mathf.Infinity;
-    //         foreach (GameObject obj in points) {
-    //             float currentDistance = Vector3.Cross(ray.direction, obj.GetComponent<Transform>().position - ray.origin).magnitude;
-    //             if (currentDistance < closestDistance) {
-    //                 closestDistance = currentDistance;
-    //                 closestObject = obj;
-    //             }
-    //         }
-    //         return closestObject;
-    //     }
-    //     return null;
-    // }
-
-    // private GameObject getClosestEnemiesInRange() {
-    //     Vector2 lv = Rotate(shootDirection, -lockingAngleRange);
-    //     Vector2 rv = Rotate(shootDirection, lockingAngleRange);
-
-    //     Debug.DrawLine(player.position, (Vector2)player.position + lv);
-    //     Debug.DrawLine(player.position, (Vector2)player.position + rv);
-
-    //     GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-    //     Ray ray = new Ray(player.position, shootDirection);
-    //     float closestDistance = Mathf.Infinity;
-
-    //     int wallLayer = LayerMask.GetMask("Player", "Walls");
-
-    //     foreach (GameObject obj in enemies) {
-    //         Transform enemyTransform = obj.GetComponent<Transform>();
-
-    //         // FROM: https://stackoverflow.com/questions/11456671/determine-if-a-point-is-within-the-range-of-two-other-points-that-create-infinit
-
-    //         Vector2 direction = enemyTransform.position - player.position;
-    //         float Sl = lv.y * direction.x - lv.x * direction.y;
-    //         float Sr = -rv.y * direction.x + rv.x * direction.y;
-
-    //         if (Sl < 0 && Sr < 0) {
-    //             if (Physics2D.Linecast(enemyTransform.position, player.position, wallLayer).transform.tag == "Player") {
-    //                 Debug.DrawLine(enemyTransform.position, player.position);
-    //                 float currentDistance = Vector3.Cross(ray.direction, obj.transform.position - ray.origin).magnitude;
-    //                 if (currentDistance < closestDistance) {
-    //                     closestDistance = currentDistance;
-    //                     closestObject = obj;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return closestObject;
-    // }
-
     // FROM: https://stackoverflow.com/questions/22818531/how-to-rotate-2d-vector
     private const float DegToRad = Mathf.PI/180;
 

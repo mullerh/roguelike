@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1005789545044557659}
   - component: {fileID: 5798225835320146216}
   m_Layer: 10
-  m_Name: Projectile
+  m_Name: BasicProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,8 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1005789545044557659}
-  projSpeed: 50
-  damage: 5
+  projSpeed: 5
+  damage: 1
+  isParent: 1
+  travelVector: {x: 0, y: 0, z: 0}
 --- !u!54 &1005789545044557659
 Rigidbody:
   m_ObjectHideFlags: 0

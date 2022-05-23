@@ -29,12 +29,19 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public InputAction shoot;
 
     // jump
-    public float jumpTime = 0.5f;
-    public float jumpCooldown = 3;
-    public float jumpSpeed = 2f;
+    public float jumpTime;
+    public float jumpCooldown;
+    public float jumpSpeed;
     public float jumpingDamage;
-    public GameObject dashWallPrefab;
+    public int maxDashedWalls;
     [HideInInspector] public float cooldownUntilNextJump = -3;
+    private Queue<GameObject> dashWalls = new Queue<GameObject>();
+    private Queue<GameObject> activeDashWalls = new Queue<GameObject>();
+
+    // Wall types
+    public GameObject damageWall;
+    public GameObject bombWall;
+    public GameObject splitWall;
 
     // shoot
     public ShooterBehaviour shooter;
@@ -50,6 +57,10 @@ public class PlayerMovement : MonoBehaviour
         playerControls = new PlayerControls();
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");
         rend = GetComponent<Renderer>();
+
+        dashWalls.Enqueue(Instantiate(damageWall, new Vector3(1000, 1000, 1000), Quaternion.identity));
+        dashWalls.Enqueue(Instantiate(bombWall, new Vector3(1000, 1000, 1000), Quaternion.identity));
+        dashWalls.Enqueue(Instantiate(splitWall, new Vector3(1000, 1000, 1000), Quaternion.identity));
     }
 
     void OnEnable() {
@@ -110,7 +121,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void drawDashWall(Vector3 startDashPos, Vector3 endDashPos) {
         // Instantiate(dashWallPrefab, middleDashPos, Quaternion.LookRotation(endDashPos));
-        GameObject dashWall = Instantiate(dashWallPrefab);
+        GameObject dashWall = dashWalls.Dequeue();
+        dashWalls.Enqueue(dashWall);
+        activeDashWalls.Enqueue(dashWall);
+        if (activeDashWalls.Count > maxDashedWalls) {
+            GameObject oldestWall = activeDashWalls.Dequeue();
+            oldestWall.transform.position = new Vector3(1000, 1000, 1000);
+        }
+
         dashWall.transform.localScale = new Vector3(0.25f, 1f, Vector3.Distance(startDashPos, endDashPos));
         dashWall.transform.position = startDashPos + (endDashPos - startDashPos)/2;
         dashWall.transform.rotation = Quaternion.LookRotation(endDashPos - startDashPos);
