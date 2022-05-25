@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8922f69693fe14d86e8fdb5a45a962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 4541464404547435317}
+  playerMovement: {fileID: 4541464404547435319}
   projectilePrefab: {fileID: 6505045298580071151, guid: b9e27b8bad6633e419386ec2dd83f542,
     type: 3}
   fireRate: 1.96
@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacles: {fileID: 0}
+  cam: {fileID: 0}
   rb: {fileID: 4541464404547435316}
   moveSpeed: 7.5
   moveDirection: {x: 0, y: 0, z: 0}

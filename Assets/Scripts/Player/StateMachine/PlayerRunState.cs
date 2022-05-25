@@ -33,7 +33,12 @@ public class PlayerRunState : PlayerBaseState
         Vector2 tempDir = playerMovement.move.ReadValue<Vector2>();
         Vector3 moveVec = new Vector3(tempDir.x, 0, tempDir.y);
         if (moveVec != Vector3.zero) {
-            playerMovement.moveDirection = moveVec;
+            moveVec.Normalize();
+
+            float targetAngle = Mathf.Atan2(moveVec.x, moveVec.z) * Mathf.Rad2Deg + playerMovement.cam.eulerAngles.y;
+            playerMovement.transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+            playerMovement.moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             playerMovement.moveDirection.Normalize();
 
             playerMovement.rb.MovePosition(playerMovement.rb.position + playerMovement.moveDirection * playerMovement.moveSpeed * Time.fixedDeltaTime);

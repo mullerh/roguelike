@@ -6,11 +6,12 @@ using UnityEngine.InputSystem;
 public class ShooterBehaviour : MonoBehaviour
 {
     public PlayerControls playerControls;
-    public Transform player;
+    public PlayerMovement playerMovement;
     public ProjectileBehaviour projectilePrefab;
     public float fireRate;
     public float lockingAngleRange;
     [HideInInspector] public Vector3 shootDirection;
+    private Transform playerTransform;
     private InputAction shoot;
     private float lastShotTime = -10;
     private Vector3 offsetVector;
@@ -21,11 +22,13 @@ public class ShooterBehaviour : MonoBehaviour
     // private GameObject closestObject = null;
 
     void Awake() {
+        // this must come before playerControls (for some reason??)
+        playerTransform = playerMovement.transform;
         // keep a list of all enemies, istead of doing so at each frame
         enemies = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
         playerControls = new PlayerControls();
-        // vector from player to shooter
-        offsetVector = transform.position - player.position;
+        // vector from playerTransform to shooter
+        offsetVector = transform.position - playerTransform.position;
         // layers the prediction line can hit
         wallPlayerLayer = LayerMask.GetMask("Walls");
     }
@@ -46,20 +49,29 @@ public class ShooterBehaviour : MonoBehaviour
         // get direction of shoot input
         Vector2 tempDir = shoot.ReadValue<Vector2>();
         shootDirection = new Vector3(tempDir.x, 0, tempDir.y);
-        shootDirection.Normalize();
+        if (shootDirection != Vector3.zero) {
+            shootDirection.Normalize();
 
-        // get the enemy in aim FOV that is closest to the line extending out from the direction the player is facing
+            // adjust for camera angle
+            float targetAngle = Mathf.Atan2(shootDirection.x, shootDirection.z) * Mathf.Rad2Deg + playerMovement.cam.eulerAngles.y;
+            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+            shootDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            shootDirection.Normalize();
+        }
+
+        // get the enemy in aim FOV that is closest to the line extending out from the direction the playerTransform is facing
         GameObject closestEnemyInRange = getClosestEnemiesInRange(tempDir);
-        // // if such an enemy exists, override the direction player is shooting (otherwise will stay the direction of input)
+        // // if such an enemy exists, override the direction playerTransform is shooting (otherwise will stay the direction of input)
         if (closestEnemyInRange != null) {
-            shootDirection = closestEnemyInRange.transform.position - player.position;
+            shootDirection = closestEnemyInRange.transform.position - playerTransform.position;
             shootDirection.Normalize();
 
             Debug.Log(Vector3.Scale(Mathf.Sqrt(3) * shootDirection, offsetVector));
         }
 
-        // move shooter towards the direction player is shooting (while maintaining offset XY ratio)
-        transform.position = Vector3.Scale(Mathf.Sqrt(3) * shootDirection, offsetVector) + player.position;
+        // move shooter towards the direction playerTransform is shooting (while maintaining offset XY ratio)
+        transform.position = Vector3.Scale(Mathf.Sqrt(3) * shootDirection, offsetVector) + playerTransform.position;
     }
 
     public void spawnProj(){
@@ -80,13 +92,13 @@ public class ShooterBehaviour : MonoBehaviour
         Vector2 lv = Rotate(direction, -lockingAngleRange);
         Vector2 rv = Rotate(direction, lockingAngleRange);
         
-        Vector2 playerPos2D = new Vector2(player.position.x, player.position.z);
+        Vector2 playerPos2D = new Vector2(playerTransform.position.x, playerTransform.position.z);
 
         // for debugging
-        Debug.DrawLine(player.position, new Vector3(player.position.x + lv.x, player.position.y, player.position.z + lv.y));
-        Debug.DrawLine(player.position, new Vector3(player.position.x + rv.x, player.position.y, player.position.z + rv.y));
+        Debug.DrawLine(playerTransform.position, new Vector3(playerTransform.position.x + lv.x, playerTransform.position.y, playerTransform.position.z + lv.y));
+        Debug.DrawLine(playerTransform.position, new Vector3(playerTransform.position.x + rv.x, playerTransform.position.y, playerTransform.position.z + rv.y));
 
-        // ray from player going towards the direction of shot
+        // ray from playerTransform going towards the direction of shot
         Ray ray = new Ray(playerPos2D, direction);
         float closestDistance = Mathf.Infinity;
         GameObject closestObject = null;
@@ -102,9 +114,9 @@ public class ShooterBehaviour : MonoBehaviour
 
             // if enemy is within autoaim FOV 
             if (Sl < 0 && Sr < 0) {
-                // if line from enemy to player is unobstructed
-                if (!Physics.Linecast(enemyTransform.position, player.position, wallPlayerLayer)) {
-                    Debug.DrawLine(enemyTransform.position, player.position);
+                // if line from enemy to playerTransform is unobstructed
+                if (!Physics.Linecast(enemyTransform.position, playerTransform.position, wallPlayerLayer)) {
+                    Debug.DrawLine(enemyTransform.position, playerTransform.position);
                     // FROM: https://answers.unity.com/questions/568773/shortest-distance-from-a-point-to-a-vector.html
                     // distance from enemy to ray
                     float currentDistance = Vector3.Cross(ray.direction, enemyPos2D - (Vector2)ray.origin).magnitude;

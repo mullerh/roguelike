@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     // game objects
     [HideInInspector] public GameObject obstacles;
+    public Transform cam;
 
     // states
     private PlayerBaseState currentState;
