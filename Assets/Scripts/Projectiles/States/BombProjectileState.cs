@@ -12,7 +12,6 @@ public class BombProjectileState : BaseProjectileState
     public override void ProjectileStateFixedUpdate(ProjectileBehaviour pb)
     {
         pb.rb.AddForce((Vector3.down * pb.gravityMultipler), ForceMode.Acceleration);
-        pb.damage += 5;
     }
 
     public override void ProjectileStateOnCollisionEnter(ProjectileBehaviour pb, Collision collision) {

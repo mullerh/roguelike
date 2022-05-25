@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerBaseState
 {
-    private float jumpTimer = 0;
+    private float timeElapsed = 0;
     private RigidbodyConstraints rbConstraintsDefault = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     private Vector3 startDashPos;
     private Vector3 endDashPos;
 
     private bool flag = false;
     
+
+
     public override void EnterState(PlayerMovement playerMovement) {
         // debugging
         Debug.Log("JUMPING");
@@ -25,7 +27,7 @@ public class PlayerJumpState : PlayerBaseState
         // set timer and layer and constraints
         flag = true;
         startDashPos = playerMovement.transform.position;
-        jumpTimer = Time.time;
+        timeElapsed = 0;
         playerMovement.gameObject.layer = LayerMask.NameToLayer("Jumper");
         playerMovement.rb.constraints = rbConstraintsDefault | RigidbodyConstraints.FreezePositionY;
     }
@@ -39,9 +41,10 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void FixedUpdateState(PlayerMovement playerMovement) {
         // Jump in moveDirection at movespeed * jumpspeed (otherwise switch back to run and set cooldown timer)
-        if (jumpTimer + playerMovement.jumpTime > Time.time) {
+        if (playerMovement.jumpTime > timeElapsed) {
             playerMovement.rb.MovePosition(playerMovement.rb.position + playerMovement.moveDirection * 
-                                           playerMovement.moveSpeed * Time.fixedDeltaTime * playerMovement.jumpSpeed);
+                                           Time.fixedDeltaTime * playerMovement.jumpSpeed);
+            timeElapsed += Time.deltaTime;
         } else {
             playerMovement.cooldownUntilNextJump = Time.time + playerMovement.jumpCooldown;
             playerMovement.SwitchState(playerMovement.RunState);

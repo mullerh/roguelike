@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1792238312529309962}
   - component: {fileID: 1792238312529309963}
   - component: {fileID: -8651067017639805739}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: SplitWallPrefab
   m_TagString: DashWall
   m_Icon: {fileID: 0}

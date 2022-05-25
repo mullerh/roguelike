@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1792238312529309962}
   - component: {fileID: 1792238312529309963}
   - component: {fileID: 3330438565600452918}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: BombWallPrefab
   m_TagString: DashWall
   m_Icon: {fileID: 0}
@@ -110,5 +110,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a148073106d11f14fb253f8457b5c18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombProjPrefab: {fileID: 6505045298580071139, guid: 5623ed3977b40bd4e87c463e603244fd,
-    type: 3}

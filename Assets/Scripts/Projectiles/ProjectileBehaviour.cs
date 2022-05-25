@@ -26,6 +26,9 @@ public class ProjectileBehaviour : MonoBehaviour
     public float gravityMultipler = 1.125f;
 
     void Start() {
+        if (projStates.Count > 0) {
+            projStates = new List<BaseProjectileState>(projStates);
+        } 
         // get scripts of player and shooter
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<ShooterBehaviour>();

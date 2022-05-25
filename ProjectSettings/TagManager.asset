@@ -8,6 +8,7 @@ TagManager:
   - Obstacles
   - Walls
   - Shooter
+  - DashWall
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Shooter
   - Jumper
   - EnemyJumper
-  - 
+  - EnemyEdge
   - 
   - 
   - 
