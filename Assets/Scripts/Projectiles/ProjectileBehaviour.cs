@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ProjectileBehaviour : MonoBehaviour
 {
+    // DEBUG
+    public float numberOfStates;
+
     // objects
     public Rigidbody rb;
 
@@ -25,10 +28,7 @@ public class ProjectileBehaviour : MonoBehaviour
     // gravity
     public float gravityMultipler = 1.125f;
 
-    void Start() {
-        if (projStates.Count > 0) {
-            projStates = new List<BaseProjectileState>(projStates);
-        } 
+    void Start() { 
         // get scripts of player and shooter
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<ShooterBehaviour>();
@@ -51,6 +51,7 @@ public class ProjectileBehaviour : MonoBehaviour
         foreach (BaseProjectileState state in projStates) {
             state.ProjectileStateFixedUpdate(this);
         }
+        numberOfStates = projStates.Count;
     }
 
     // destroy when it collides with something

@@ -18,13 +18,13 @@ public class SplitWall : MonoBehaviour
                     Physics.IgnoreCollision(newProjPos.GetComponent<SphereCollider>(), transform.root.GetComponent<BoxCollider>());
                     newProjPos.GetComponent<ProjectileBehaviour>().travelVector = Quaternion.Euler(0, i, 0) * collider.gameObject.GetComponent<ProjectileBehaviour>().travelVector;
                     newProjPos.GetComponent<ProjectileBehaviour>().isParent = false;
-                    newProjPos.GetComponent<ProjectileBehaviour>().projStates = collider.gameObject.GetComponent<ProjectileBehaviour>().projStates;
+                    newProjPos.GetComponent<ProjectileBehaviour>().projStates = new List<BaseProjectileState>(collider.gameObject.GetComponent<ProjectileBehaviour>().projStates);
 
                     GameObject newProjNeg = Instantiate(collider.gameObject, collider.gameObject.transform.position, Quaternion.identity);
                     Physics.IgnoreCollision(newProjNeg.GetComponent<SphereCollider>(), transform.root.GetComponent<BoxCollider>());
                     newProjNeg.GetComponent<ProjectileBehaviour>().travelVector = Quaternion.Euler(0, -i, 0) * collider.gameObject.GetComponent<ProjectileBehaviour>().travelVector;
                     newProjNeg.GetComponent<ProjectileBehaviour>().isParent = false;
-                    newProjNeg.GetComponent<ProjectileBehaviour>().projStates = collider.gameObject.GetComponent<ProjectileBehaviour>().projStates;
+                    newProjNeg.GetComponent<ProjectileBehaviour>().projStates = new List<BaseProjectileState>(collider.gameObject.GetComponent<ProjectileBehaviour>().projStates);
                 }
             }
         }
