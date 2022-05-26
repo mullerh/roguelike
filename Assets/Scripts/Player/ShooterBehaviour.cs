@@ -61,7 +61,7 @@ public class ShooterBehaviour : MonoBehaviour
         }
 
         // get the enemy in aim FOV that is closest to the line extending out from the direction the playerTransform is facing
-        GameObject closestEnemyInRange = getClosestEnemiesInRange(tempDir);
+        GameObject closestEnemyInRange = getClosestEnemiesInRange(new Vector2(shootDirection.x, shootDirection.z));
         // // if such an enemy exists, override the direction playerTransform is shooting (otherwise will stay the direction of input)
         if (closestEnemyInRange != null) {
             shootDirection = closestEnemyInRange.transform.position - playerTransform.position;
