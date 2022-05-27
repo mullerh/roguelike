@@ -11,7 +11,6 @@ public class DamageProjectileState : BaseProjectileState
 
     public override void ProjectileStateFixedUpdate(ProjectileBehaviour pb)
     {
-        pb.damage += 5;
     }
 
     public override void ProjectileStateOnCollisionEnter(ProjectileBehaviour pb, Collision collision) {

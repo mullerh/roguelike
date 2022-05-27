@@ -16,9 +16,16 @@ public class Boss1Behaviour : MonoBehaviour
     // stats
     public float health;
     public float baseDamage;
+    public float baseFireRate;
+
+    // objects
+    private ShooterBehaviour shooter;
 
     void Awake() {
         rend = GetComponent<Renderer>();
+
+        // so it can remove itself from shooter's enemy list if killed
+        shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<ShooterBehaviour>();
     }
 
     // Start is called before the first frame update
@@ -45,5 +52,15 @@ public class Boss1Behaviour : MonoBehaviour
         currentStage.ExitStage(this);
         currentStage = stage;
         currentStage.EnterStage(this);
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Projectiles")) {
+            health -= collision.gameObject.GetComponent<ProjectileBehaviour>().damage;
+            if (health <= 0) {
+                shooter.enemies.Remove(gameObject);
+                Destroy(gameObject);
+            }
+        }
     }
 }
