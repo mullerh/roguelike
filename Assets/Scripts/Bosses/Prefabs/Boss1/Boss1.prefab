@@ -113,3 +113,9 @@ MonoBehaviour:
   rend: {fileID: 0}
   health: 0
   baseDamage: 0
+  baseFireRate: 0
+  numberOfSplits: 10
+  projectilePrefab: {fileID: 6505045298580071151, guid: 8966c321443b3c044ba2115b3bc4a45c,
+    type: 3}
+  lastShotTime: -10
+  player: {fileID: 0}

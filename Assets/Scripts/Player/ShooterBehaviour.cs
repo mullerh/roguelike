@@ -10,13 +10,14 @@ public class ShooterBehaviour : MonoBehaviour
     public ProjectileBehaviour projectilePrefab;
     public float fireRate;
     public float lockingAngleRange;
-    [HideInInspector] public Vector3 shootDirection;
+    public List<GameObject> enemies;
+
+    private Vector3 shootDirection;
     private Transform playerTransform;
     private InputAction shoot;
     private float lastShotTime = -10;
     private Vector3 offsetVector;
     private int wallPlayerLayer;
-    public List<GameObject> enemies;
 
     // objects
     // private GameObject closestObject = null;
@@ -79,10 +80,14 @@ public class ShooterBehaviour : MonoBehaviour
         if (lastShotTime + 1/fireRate < Time.time) {
             lastShotTime = Time.time;
             
+            // TODO: move to factory pattern
             // create a projectile at position of the shooter
-            Instantiate(projectilePrefab, 
-                        transform.position, 
-                        Quaternion.identity);
+            ProjectileBehaviour newProj = Instantiate(projectilePrefab, 
+                                                       transform.position, 
+                                                       Quaternion.identity).GetComponent<ProjectileBehaviour>();
+
+            newProj.shooterMoveSpeed = playerMovement.moveSpeed;
+            newProj.shootDirection = shootDirection;
         }
     }
 

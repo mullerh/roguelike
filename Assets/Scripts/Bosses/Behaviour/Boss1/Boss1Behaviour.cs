@@ -9,23 +9,25 @@ public class Boss1Behaviour : MonoBehaviour
 
     // stages
     private BaseStage currentStage;
-    public InitialStage initStage = new InitialStage();
-    public MiddleStage middleStage = new MiddleStage();
-    public FinalStage finalStage = new FinalStage();
+    [HideInInspector] public InitialStage initStage = new InitialStage();
+    [HideInInspector] public MiddleStage middleStage = new MiddleStage();
+    [HideInInspector] public FinalStage finalStage = new FinalStage();
 
     // stats
     public float health;
     public float baseDamage;
     public float baseFireRate;
+    public int numberOfSplits;
+    
+    // projectiles
+    public ProjectileBehaviour projectilePrefab;
+    [HideInInspector] public float lastShotTime = -10;
 
     // objects
-    private ShooterBehaviour shooter;
+    public PlayerMovement player; 
 
     void Awake() {
         rend = GetComponent<Renderer>();
-
-        // so it can remove itself from shooter's enemy list if killed
-        shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<ShooterBehaviour>();
     }
 
     // Start is called before the first frame update
@@ -58,9 +60,21 @@ public class Boss1Behaviour : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Projectiles")) {
             health -= collision.gameObject.GetComponent<ProjectileBehaviour>().damage;
             if (health <= 0) {
-                shooter.enemies.Remove(gameObject);
+                player.shooter.enemies.Remove(gameObject);
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void spawnProj(Vector3 shootDirection){
+        // if it has been long enough since last shot
+            lastShotTime = Time.time;
+            
+            // create a projectile at position of the shooter
+            ProjectileBehaviour newProj = Instantiate(projectilePrefab, 
+                                                      transform.position + shootDirection.normalized * 4f + 0.3f * Vector3.up, 
+                                                      Quaternion.identity).GetComponent<ProjectileBehaviour>();
+            newProj.shooterMoveSpeed = 0;
+            newProj.shootDirection = shootDirection;
     }
 }

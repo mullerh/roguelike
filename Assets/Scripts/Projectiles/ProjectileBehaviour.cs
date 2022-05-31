@@ -17,30 +17,25 @@ public class ProjectileBehaviour : MonoBehaviour
 
     // movement
     public Vector3 travelVector;
-    private PlayerMovement playerMovement;
 
-    // shooter
-    private ShooterBehaviour shooter;
+    // MUST BE SET
+    [HideInInspector] public float shooterMoveSpeed;
+    [HideInInspector] public Vector3 shootDirection;
 
-    // states
     public List<BaseProjectileState> projStates = new List<BaseProjectileState>();
 
     // gravity
     public float gravityMultipler = 1.125f;
 
     void Start() { 
-        // get scripts of player and shooter
-        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<ShooterBehaviour>();
-
         if (travelVector == new Vector3(0, 0, 0)) {
-            travelVector = (projSpeed + playerMovement.moveSpeed) * shooter.shootDirection;
+            travelVector = (projSpeed + shooterMoveSpeed) * shootDirection;
         }
     }
 
     public void AddState(BaseProjectileState projState) {
-        projState.ProjectileStateAdded(this);
         projStates.Add(projState);
+        projState.ProjectileStateAdded(this);
     }
 
     private void FixedUpdate()
