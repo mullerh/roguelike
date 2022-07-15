@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6505045298580071136}
-  - component: {fileID: 6505045298580071151}
   - component: {fileID: 1005789545044557659}
   - component: {fileID: 5798225835320146216}
   - component: {fileID: 6942536103946765873}
+  - component: {fileID: 3946781276804400999}
   m_Layer: 10
   m_Name: BasicProjectile
   m_TagString: Untagged
@@ -36,25 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6505045298580071151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505045298580071139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f18f2584d2467043a5fe5159bf51cc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfStates: 0
-  rb: {fileID: 1005789545044557659}
-  projSpeed: 15
-  damage: 1
-  isParent: 1
-  travelVector: {x: 0, y: 0, z: 0}
-  gravityMultipler: 1
 --- !u!54 &1005789545044557659
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -183,6 +164,27 @@ TrailRenderer:
   m_MinVertexDistance: 0
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &3946781276804400999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505045298580071139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61f7fb8bd7a24340afe10e8c43ad995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfStates: 0
+  rb: {fileID: 1005789545044557659}
+  projSpeed: 15
+  damage: 1
+  isParent: 1
+  travelVector: {x: 0, y: 0, z: 0}
+  shooterMoveSpeed: 0
+  shootDirection: {x: 0, y: 0, z: 0}
+  gravityMultipler: 1
 --- !u!1 &8222136814672664945
 GameObject:
   m_ObjectHideFlags: 0

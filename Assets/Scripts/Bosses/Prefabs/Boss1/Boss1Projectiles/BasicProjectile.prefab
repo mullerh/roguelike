@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6505045298580071136}
-  - component: {fileID: 6505045298580071151}
   - component: {fileID: 1005789545044557659}
   - component: {fileID: 5798225835320146216}
-  m_Layer: 10
+  - component: {fileID: 3728289897792283558}
+  m_Layer: 17
   m_Name: BasicProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,27 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6505045298580071151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505045298580071139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f18f2584d2467043a5fe5159bf51cc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfStates: 0
-  rb: {fileID: 1005789545044557659}
-  projSpeed: 2.5
-  damage: 1
-  isParent: 1
-  travelVector: {x: 0, y: 0, z: 0}
-  shooterMoveSpeed: 0
-  shootDirection: {x: 0, y: 0, z: 0}
-  gravityMultipler: 1
 --- !u!54 &1005789545044557659
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -85,6 +64,27 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.125
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3728289897792283558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505045298580071139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7b2f9f12ae96d4fb5a6ac6aa729b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfStates: 0
+  rb: {fileID: 1005789545044557659}
+  projSpeed: 5
+  damage: 1
+  isParent: 1
+  travelVector: {x: 0, y: 0, z: 0}
+  shooterMoveSpeed: 0
+  shootDirection: {x: 0, y: 0, z: 0}
+  gravityMultipler: 1
 --- !u!1 &8222136814672664945
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5405113895178997809}
   - component: {fileID: 1854698472222267000}
   - component: {fileID: 5730917426237403985}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

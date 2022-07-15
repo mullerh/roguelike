@@ -9,7 +9,7 @@ public class SplitWall : MonoBehaviour
     public float numberOfSplits;
 
     void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.layer == LayerMask.NameToLayer("Projectiles")) {
+        if (collider.gameObject.layer == LayerMask.NameToLayer("PlayerProjectiles")) {
             if (collider.gameObject.GetComponent<ProjectileBehaviour>().isParent) {
                 Physics.IgnoreCollision(collider, transform.root.GetComponent<BoxCollider>());
                 ProjectileBehaviour colliderProjBehaviour = collider.gameObject.GetComponent<ProjectileBehaviour>();

@@ -23,7 +23,6 @@ public class InitialStage : BaseStage
             float startAngle = rotationCycle * (splitAngle / (rotationPerCycle + 1));
  
             for (float i = startAngle; i < 360 + startAngle; i += splitAngle) {
-                Debug.Log(i);
                 bossBehaviour.spawnProj(Quaternion.Euler(0, i, 0) * (Vector3.right + Vector3.forward));
             }
         }

@@ -189,11 +189,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 4541464404547435319}
-  projectilePrefab: {fileID: 6505045298580071151, guid: b9e27b8bad6633e419386ec2dd83f542,
+  projectilePrefab: {fileID: 3946781276804400999, guid: b9e27b8bad6633e419386ec2dd83f542,
     type: 3}
   fireRate: 1.96
   lockingAngleRange: 25
-  shootDirection: {x: 0, y: 0, z: 0}
   enemies: []
 --- !u!1 &4541464404547435321
 GameObject:

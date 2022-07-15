@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileBehaviour : MonoBehaviour
+public abstract class ProjectileBehaviour : MonoBehaviour
 {
-    // DEBUG
+    [Header("DEBUG")]
     public float numberOfStates;
 
-    // objects
+    [Header("Objects")]
     public Rigidbody rb;
 
-    // stats
+    [Header("Stats")]
     public float projSpeed;
     public float damage;
-    public bool isParent = true;
+    [HideInInspector] public bool isParent = true;
 
-    // movement
+    [Header("Movement")]
     public Vector3 travelVector;
 
     // MUST BE SET
@@ -24,8 +24,8 @@ public class ProjectileBehaviour : MonoBehaviour
 
     public List<BaseProjectileState> projStates = new List<BaseProjectileState>();
 
-    // gravity
-    public float gravityMultipler = 1.125f;
+    [Header("Gravity")]
+    public float gravityMultipler;
 
     void Start() { 
         if (travelVector == new Vector3(0, 0, 0)) {
