@@ -16,14 +16,17 @@ public class Boss1Behaviour : DamageableBehaviour
     // stats
     public float baseDamage;
     public float baseFireRate;
-    public int numberOfSplits;
+    public float numberOfSplits;
     
     // projectiles
     public ProjectileBehaviour projectilePrefab;
     [HideInInspector] public float lastShotTime = -10;
 
     // objects
-    public PlayerMovement player; 
+    public PlayerMovement player;
+
+    // stages stats
+    public float rotationPerCycle;
 
     void Awake() {
         rend = GetComponent<Renderer>();

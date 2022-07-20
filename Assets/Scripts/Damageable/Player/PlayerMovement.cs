@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : DamageableBehaviour
 {
     // controls
     [HideInInspector] public PlayerControls playerControls;
@@ -46,9 +46,6 @@ public class PlayerMovement : MonoBehaviour
 
     // shoot
     public ShooterBehaviour shooter;
-
-    // player stats
-    public float health;
 
     // Debugger variables
     [HideInInspector] public Renderer rend;

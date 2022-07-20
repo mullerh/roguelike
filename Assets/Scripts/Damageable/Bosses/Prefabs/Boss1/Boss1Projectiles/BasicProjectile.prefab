@@ -78,8 +78,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfStates: 0
   rb: {fileID: 1005789545044557659}
-  projSpeed: 5
-  damage: 1
+  projSpeed: 3.5
+  damage: 0
   isParent: 1
   travelVector: {x: 0, y: 0, z: 0}
   shooterMoveSpeed: 0
