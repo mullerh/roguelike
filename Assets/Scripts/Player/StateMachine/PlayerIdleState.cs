@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
+    // RigidbodyConstraints originalConstraints;
     public override void EnterState(PlayerMovement playerMovement) {
         // debugging
         playerMovement.rend.material.color = Color.white;
         Debug.Log("IDLE");
+        // originalConstraints = playerMovement.rb.constraints;
+        // playerMovement.rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     public override void UpdateState(PlayerMovement playerMovement) {
@@ -29,5 +32,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void FixedUpdateState(PlayerMovement playerMovement) {}
 
-    public override void ExitState(PlayerMovement playerMovement) {}
+    public override void ExitState(PlayerMovement playerMovement) {
+        // playerMovement.rb.constraints = originalConstraints;
+    }
 }

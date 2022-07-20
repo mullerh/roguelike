@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : DamageableBehaviour
 {
     // stats
-    public float health;
     public float damage;
     public float agroThreshold;
     public float stopAgroThreshold;

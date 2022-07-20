@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss1Behaviour : MonoBehaviour
+public class Boss1Behaviour : DamageableBehaviour
 {
     // Debugging
     [HideInInspector] public Renderer rend;
@@ -14,7 +14,6 @@ public class Boss1Behaviour : MonoBehaviour
     [HideInInspector] public FinalStage finalStage = new FinalStage();
 
     // stats
-    public float health;
     public float baseDamage;
     public float baseFireRate;
     public int numberOfSplits;

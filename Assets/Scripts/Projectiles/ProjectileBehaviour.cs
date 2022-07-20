@@ -54,6 +54,9 @@ public abstract class ProjectileBehaviour : MonoBehaviour
         foreach (BaseProjectileState state in projStates) {
             state.ProjectileStateOnCollisionEnter(this, collision);
         }
+        DealDamage(collision);
         Destroy(gameObject);
     }
+
+    protected abstract void DealDamage(Collision collision);
 }
