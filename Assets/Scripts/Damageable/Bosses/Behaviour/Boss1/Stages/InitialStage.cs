@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InitialStage : BaseStage
 { 
-    private float rotationCycle = 0;
     private float splitAngle;
     private float startAngle = 0;
     private float leftOverAngle = 0;
@@ -19,7 +18,6 @@ public class InitialStage : BaseStage
         if (bossBehaviour.lastShotTime + 1/bossBehaviour.baseFireRate < Time.time) {
             startAngle = (splitAngle * bossBehaviour.rotationPerCycle) + leftOverAngle;
             Debug.Log(startAngle);
-            // float startAngle = rotationCycle * (splitAngle / (rotationPerCycle + 1));
  
             float i;
             for (i = startAngle; i < 360 + startAngle; i += splitAngle) {
