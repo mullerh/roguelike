@@ -323,10 +323,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c30b881806eb948a15afeff95ec242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   obstacles: {fileID: 0}
   cam: {fileID: 0}
   rb: {fileID: 4541464404547435316}
-  moveSpeed: 7.5
+  moveSpeed: 5
   moveDirection: {x: 0, y: 0, z: 0}
   move:
     m_Name: 
@@ -355,7 +356,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  jumpTime: 0.125
+  jumpTime: 0.075
   jumpCooldown: 1
   jumpSpeed: 50
   jumpingDamage: 5
@@ -368,5 +369,4 @@ MonoBehaviour:
   splitWall: {fileID: 1792238312529309964, guid: 109ade6a8fc1ed849bddd404e58f9037,
     type: 3}
   shooter: {fileID: 4541464404136467723}
-  health: 100
   rend: {fileID: 0}

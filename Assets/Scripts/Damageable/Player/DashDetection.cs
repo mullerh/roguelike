@@ -13,9 +13,9 @@ public class DashDetection : MonoBehaviour
         // if dashed over enemy
         if (collider.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
             // damage enemy
-            collider.gameObject.GetComponent<EnemyBehaviour>().health -= player.jumpingDamage;
+            collider.gameObject.GetComponent<DamageableBehaviour>().health -= player.jumpingDamage;
             // if enemy is below 0 health
-            if (collider.gameObject.GetComponent<EnemyBehaviour>().health <= 0) {
+            if (collider.gameObject.GetComponent<DamageableBehaviour>().health <= 0) {
                 // kill enemy (important to remove from enemies)
                 shooter.enemies.Remove(collider.gameObject);
                 Destroy(collider.gameObject);

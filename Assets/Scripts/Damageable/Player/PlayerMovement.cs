@@ -56,9 +56,9 @@ public class PlayerMovement : DamageableBehaviour
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");
         rend = GetComponent<Renderer>();
 
-        dashWalls.Enqueue(Instantiate(damageWall, new Vector3(1000, 1000, 1000), Quaternion.identity));
-        dashWalls.Enqueue(Instantiate(bombWall, new Vector3(1000, 1000, 1000), Quaternion.identity));
-        dashWalls.Enqueue(Instantiate(splitWall, new Vector3(1000, 1000, 1000), Quaternion.identity));
+        dashWalls.Enqueue(Instantiate(damageWall, new Vector3(100000, 100000, 100000), Quaternion.identity));
+        dashWalls.Enqueue(Instantiate(bombWall, new Vector3(100000, 100000, 100000), Quaternion.identity));
+        dashWalls.Enqueue(Instantiate(splitWall, new Vector3(100000, 100000, 100000), Quaternion.identity));
     }
 
     void OnEnable() {
@@ -106,7 +106,7 @@ public class PlayerMovement : DamageableBehaviour
         currentState.FixedUpdateState(this);
     }
 
-
+    //TODO: Move to Enemy
     private void OnCollisionEnter(Collision collision) {
         // keep track of enemies hitting the player
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies")) {
@@ -118,13 +118,12 @@ public class PlayerMovement : DamageableBehaviour
     }
 
     public void drawDashWall(Vector3 startDashPos, Vector3 endDashPos) {
-        // Instantiate(dashWallPrefab, middleDashPos, Quaternion.LookRotation(endDashPos));
         GameObject dashWall = dashWalls.Dequeue();
         dashWalls.Enqueue(dashWall);
         activeDashWalls.Enqueue(dashWall);
         if (activeDashWalls.Count > maxDashedWalls) {
             GameObject oldestWall = activeDashWalls.Dequeue();
-            oldestWall.transform.position = new Vector3(1000, 1000, 1000);
+            oldestWall.transform.position = new Vector3(100000, 100000, 100000);
         }
 
         dashWall.transform.localScale = new Vector3(0.25f, 1f, Vector3.Distance(startDashPos, endDashPos));
