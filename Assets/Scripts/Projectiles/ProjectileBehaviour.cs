@@ -13,6 +13,7 @@ public abstract class ProjectileBehaviour : MonoBehaviour
     [Header("Stats")]
     public float projSpeed;
     public float damage;
+    public float range;
     [HideInInspector] public bool isParent = true;
 
     [Header("Movement")]
@@ -46,7 +47,14 @@ public abstract class ProjectileBehaviour : MonoBehaviour
         foreach (BaseProjectileState state in projStates) {
             state.ProjectileStateFixedUpdate(this);
         }
+        //this should be moved elsewhere
         numberOfStates = projStates.Count;
+
+        gameObject.transform.localScale -= ((1 / range) *  Time.deltaTime) * new Vector3(1, 1, 1);
+
+        if (gameObject.transform.localScale.x < 1/4) {
+            Destroy(gameObject);
+        }
     }
 
     // destroy when it collides with something

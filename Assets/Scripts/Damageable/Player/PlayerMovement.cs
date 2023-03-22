@@ -55,6 +55,7 @@ public class PlayerMovement : DamageableBehaviour
         playerControls = new PlayerControls();
         obstacles = GameObject.FindGameObjectWithTag("Obstacles");
         rend = GetComponent<Renderer>();
+        rb.freezeRotation = true;
 
         dashWalls.Enqueue(Instantiate(damageWall, new Vector3(100000, 100000, 100000), Quaternion.identity));
         dashWalls.Enqueue(Instantiate(bombWall, new Vector3(100000, 100000, 100000), Quaternion.identity));

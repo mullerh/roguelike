@@ -30,6 +30,7 @@ public class PlayerRunState : PlayerBaseState
 
     public override void FixedUpdateState(PlayerMovement playerMovement) {
         // Move in direction of move input at movespeed (check for zero is to remember last direction moved, when leaving run state)
+
         Vector2 tempDir = playerMovement.move.ReadValue<Vector2>();
         Vector3 moveVec = new Vector3(tempDir.x, 0, tempDir.y);
         if (moveVec != Vector3.zero) {
